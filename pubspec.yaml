@@ -1,0 +1,37 @@
+name: soulscripter
+description: "SoulScripter - A beautiful quote, poetry, and micro-story creation app where users can write, design, and share their creative content with a vibrant community."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  google_fonts: ^6.2.1
+  firebase_core: '>=3.15.2'
+  firebase_auth: '>=5.7.0'
+  cloud_firestore: '>=5.6.12'
+  image_picker: ^1.1.2
+  flutter_colorpicker: ^1.1.0
+  shared_preferences: ^2.5.3
+  image_gallery_saver_plus: ^4.0.1
+  curved_navigation_bar: ^1.0.6
+  cached_network_image: ^3.4.1
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
