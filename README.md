@@ -31,11 +31,12 @@ SoulScripter - A beautiful, user-friendly Flutter app empowering users to craft,
     - (Planned) Save artworks, share to gallery, and engage with a creative community via Firebase.
 
 ## 🖌️ Theme
+```bash
 Primary Color: Deep Purple #673AB7
 Accent: Aesthetic Peach #FFC1A1
 Background: Whisper White (Light) / Charcoal (Dark)
 Highlight: Rich Coral Pink #FF5E81
-
+```
 (See theme.dart for the full palette.)
 
 ## 🛠 Setup & Installation
