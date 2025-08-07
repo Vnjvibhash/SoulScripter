@@ -1,5 +1,16 @@
-
+/// Contains sample data for the application.
 class SampleData {
+  /// A list of sample user data.
+  ///
+  /// Each user is represented as a map with the following keys:
+  /// - `name`: The name of the user.
+  /// - `email`: The email address of the user.
+  /// - `bio`: A short biography of the user.
+  /// - `profilePicture`: The URL of the user's profile picture (currently null).
+  /// - `followers`: A list of user IDs who follow this user.
+  /// - `following`: A list of user IDs whom this user follows.
+  /// - `postsCount`: The number of posts made by the user.
+  /// - `createdAt`: The timestamp when the user account was created.
   static final List<Map<String, dynamic>> users = [
     {
       'name': 'Maya Chen',
@@ -53,6 +64,25 @@ class SampleData {
     },
   ];
 
+  /// A list of sample quote data.
+  ///
+  /// Each quote is represented as a map with the following keys:
+  /// - `text`: The content of the quote.
+  /// - `authorId`: The ID of the user who authored the quote.
+  /// - `authorName`: The name of the user who authored the quote.
+  /// - `authorAvatar`: The URL of the author's avatar (currently null).
+  /// - `type`: The type of the post (e.g., 'quote', 'poem', 'story').
+  /// - `likes`: A list of user IDs who liked the quote.
+  /// - `commentCount`: The number of comments on the quote.
+  /// - `createdAt`: The timestamp when the quote was created.
+  /// - `design`: A map containing design details for the quote display:
+  ///   - `fontFamily`: The font family for the quote text.
+  ///   - `fontSize`: The font size for the quote text.
+  ///   - `alignment`: The text alignment (e.g., 'center', 'left').
+  ///   - `backgroundColor`: The background color for the quote.
+  ///   - `backgroundImage`: The background image for the quote (currently null).
+  ///   - `textColor`: The text color for the quote.
+  /// - `tags`: A list of tags associated with the quote.
   static final List<Map<String, dynamic>> quotes = [
     {
       'text': 'The only way to do great work is to love what you do. Passion fuels purpose, and purpose creates lasting impact.',
@@ -208,6 +238,15 @@ class SampleData {
     },
   ];
 
+  /// A list of sample comment data.
+  ///
+  /// Each comment is represented as a map with the following keys:
+  /// - `quoteId`: The ID of the quote to which the comment belongs.
+  /// - `userId`: The ID of the user who made the comment.
+  /// - `userName`: The name of the user who made the comment.
+  /// - `userAvatar`: The URL of the user's avatar (currently null).
+  /// - `text`: The content of the comment.
+  /// - `createdAt`: The timestamp when the comment was created.
   static final List<Map<String, dynamic>> comments = [
     {
       'quoteId': 'quote_001',

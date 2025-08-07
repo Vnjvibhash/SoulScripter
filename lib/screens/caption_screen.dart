@@ -3,15 +3,24 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// A screen for adding a caption and hashtags to a quote.
 class CaptionScreen extends StatefulWidget {
+  /// The quote text.
   final String quote;
+  /// The font family for the quote text.
   final String fontFamily;
+  /// The font size for the quote text.
   final double fontSize;
+  /// The text alignment for the quote.
   final TextAlign textAlign;
+  /// The background color for the quote preview.
   final Color bgColor;
+  /// The text color for the quote.
   final Color textColor;
+  /// An optional background image for the quote preview.
   final File? backgroundImage;
 
+  /// Creates a [CaptionScreen].
   const CaptionScreen({
     required this.quote,
     required this.fontFamily,
@@ -27,6 +36,7 @@ class CaptionScreen extends StatefulWidget {
   State<CaptionScreen> createState() => _CaptionScreenState();
 }
 
+/// The state for the [CaptionScreen].
 class _CaptionScreenState extends State<CaptionScreen> {
   String _caption = '';
   String _hashtags = '';
