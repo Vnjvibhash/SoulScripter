@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'theme.dart';
-import 'screens/quote_composer.dart';
+import 'package:soulscripter/screens/splash_screen.dart';
+import 'package:soulscripter/theme.dart';
 
 void main() => runApp(const MyApp());
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
-      home: const QuoteComposer(),
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

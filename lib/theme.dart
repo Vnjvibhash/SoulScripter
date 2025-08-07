@@ -3,65 +3,59 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class LightModeColors {
-  static const lightPrimary = Color(0xFF673AB7);
+  static const lightPrimary = Color(0xFFFF5E81);
   static const lightOnPrimary = Color(0xFFFFFFFF);
-  static const lightPrimaryContainer = Color(0xFFE8E0FF);
-  static const lightOnPrimaryContainer = Color(0xFF1F0054);
+  static const lightPrimaryContainer = Color(0xFFFFC1A1);
+  static const lightOnPrimaryContainer = Color(0xFF22223B);
 
   static const lightSecondary = Color(0xFFFFC1A1);
   static const lightOnSecondary = Color(0xFF22223B);
 
-  static const lightTertiary = Color(0xFFFF5E81);
+  static const lightTertiary = Color(0xFF20CFC0);
   static const lightOnTertiary = Color(0xFFFFFFFF);
 
   static const lightError = Color(0xFFD32F2F);
   static const lightOnError = Color(0xFFFFFFFF);
-  static const lightErrorContainer = Color(0xFFFFEBEE);
-  static const lightOnErrorContainer = Color(0xFFB71C1C);
 
-  static const lightInversePrimary = Color(0xFF20CFC0);
-  static const lightShadow = Color(0xFF000000);
-
-  static const lightSurface = Color(0xFFF2F2F2);
-  static const lightOnSurface = Color(
-    0xFF22223B,
+  static const lightHighlight = Color(
+    0xFF673AB7,
   );
-  
-  static const lightAppBarBackground = lightPrimaryContainer;
+  static const lightOnHighlight = Color(0xFFFFFFFF);
 
-  static const lightAccent = Color(0xFFFF6B9D);
-  static const lightOnAccent = Color(0xFFFFFFFF);
+  static const lightBackground = Color(0xFFF2F2F2);
+  static const lightOnBackground = Color(0xFF22223B);
+
+  static const lightSurface = lightBackground;
+  static const lightOnSurface = lightOnBackground;
 }
 
 class DarkModeColors {
-  static const darkPrimary = Color(0xFFE688C8);
-  static const darkOnPrimary = Color(0xFF2E0072);
-  static const darkPrimaryContainer = Color(0xFF4A27A3);
-  static const darkOnPrimaryContainer = Color(0xFFE8E0FF);
+  static const darkPrimary = Color(0xFFFF5E81);
+  static const darkOnPrimary = Color(0xFF232323);
+  static const darkPrimaryContainer = Color(
+    0xFFFF8FA3,
+  );
 
   static const darkSecondary = Color(0xFFFFC1A1);
   static const darkOnSecondary = Color(0xFF232323);
 
   static const darkTertiary = Color(0xFF20CFC0);
-  static const darkOnTertiary = Color(0xFF22223B);
+  static const darkOnTertiary = Color(0xFFF2F2F2);
 
   static const darkError = Color(0xFFFF8A80);
   static const darkOnError = Color(0xFF5D0000);
-  static const darkErrorContainer = Color(0xFFAB000D);
-  static const darkOnErrorContainer = Color(0xFFFFDAD6);
 
-  static const darkInversePrimary = Color(0xFF673AB7);
-  static const darkShadow = Color(0xFF000000);
+  static const darkHighlight = Color(
+    0xFF673AB7,
+  );
+  static const darkOnHighlight = Color(0xFFFFFFFF);
 
-  static const darkSurface = Color(0xFF232323);
-  static const darkOnSurface = Color(0xFFF2F2F2);
-  
-  static const darkAppBarBackground = darkPrimaryContainer;
+  static const darkBackground = Color(0xFF232323);
+  static const darkOnBackground = Color(0xFFF2F2F2);
 
-  static const darkAccent = Color(0xFFFF8FA3);
-  static const darkOnAccent = Color(0xFF561D26);
+  static const darkSurface = darkBackground;
+  static const darkOnSurface = darkOnBackground;
 }
-
 
 class FontSizes {
   static const double displayLarge = 57.0;
@@ -94,16 +88,17 @@ ThemeData get lightTheme => ThemeData(
     onTertiary: LightModeColors.lightOnTertiary,
     error: LightModeColors.lightError,
     onError: LightModeColors.lightOnError,
-    errorContainer: LightModeColors.lightErrorContainer,
-    onErrorContainer: LightModeColors.lightOnErrorContainer,
-    inversePrimary: LightModeColors.lightInversePrimary,
-    shadow: LightModeColors.lightShadow,
+
     surface: LightModeColors.lightSurface,
     onSurface: LightModeColors.lightOnSurface,
+
+    background: LightModeColors.lightBackground,
+    onBackground: LightModeColors.lightOnBackground,
+    brightness: Brightness.light,
   ),
-  brightness: Brightness.light,
   appBarTheme: AppBarTheme(
-    backgroundColor: LightModeColors.lightAppBarBackground,
+    backgroundColor: LightModeColors
+        .lightPrimaryContainer, // Use primaryContainer or any defined color
     foregroundColor: LightModeColors.lightOnPrimaryContainer,
     elevation: 0,
   ),
@@ -177,24 +172,22 @@ ThemeData get darkTheme => ThemeData(
     primary: DarkModeColors.darkPrimary,
     onPrimary: DarkModeColors.darkOnPrimary,
     primaryContainer: DarkModeColors.darkPrimaryContainer,
-    onPrimaryContainer: DarkModeColors.darkOnPrimaryContainer,
     secondary: DarkModeColors.darkSecondary,
     onSecondary: DarkModeColors.darkOnSecondary,
     tertiary: DarkModeColors.darkTertiary,
     onTertiary: DarkModeColors.darkOnTertiary,
     error: DarkModeColors.darkError,
     onError: DarkModeColors.darkOnError,
-    errorContainer: DarkModeColors.darkErrorContainer,
-    onErrorContainer: DarkModeColors.darkOnErrorContainer,
-    inversePrimary: DarkModeColors.darkInversePrimary,
-    shadow: DarkModeColors.darkShadow,
+
     surface: DarkModeColors.darkSurface,
     onSurface: DarkModeColors.darkOnSurface,
+
+    background: DarkModeColors.darkBackground,
+    onBackground: DarkModeColors.darkOnBackground,
+    brightness: Brightness.dark,
   ),
-  brightness: Brightness.dark,
   appBarTheme: AppBarTheme(
-    backgroundColor: DarkModeColors.darkAppBarBackground,
-    foregroundColor: DarkModeColors.darkOnPrimaryContainer,
+    backgroundColor: DarkModeColors.darkPrimaryContainer,
     elevation: 0,
   ),
   textTheme: TextTheme(
