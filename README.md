@@ -4,7 +4,7 @@
   <img src="assets/images/logo.png?raw=true" alt="SoulScripter Logo" height="400"/>
 </p>
 
-SoulScripter - A beautiful quote, poetry, and micro-story creation app where users can write, design, and share their creative content with a vibrant community.
+SoulScripter - A beautiful, user-friendly Flutter app empowering users to craft, style, and share quotes, poetry, and micro-stories. Its elegant interface allows creative writers to express themselves, add unique backgrounds and fonts, and share their works with an engaged community.
 
 ## ✨ Features
 - Compose Quotes & Stories
@@ -99,3 +99,4 @@ Contributions and PRs are welcome! Please raise an issue before starting major c
 ## © 2024 SoulScripter
 Crafted with Flutter.
 Unleash your soul—one story at a time.
+
