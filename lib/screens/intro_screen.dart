@@ -21,104 +21,94 @@ class _IntroScreenState extends State<IntroScreen> {
     final theme = Theme.of(context);
 
     // Set transparent status bar (works on both Android and iOS)
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness:
-            Brightness.dark,
-        statusBarBrightness: Brightness.light,
-      ),
-      child: Scaffold(
-        backgroundColor: theme.colorScheme.surface,
-        body: SafeArea(
-          child: Stack(
+    return Scaffold(
+      backgroundColor: theme.colorScheme.surface,
+      body: Stack(
+        children: [
+          // Decorative Background, can swap gradients/colors here
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    theme.colorScheme.primary.withOpacity(0.13),
+                    theme.colorScheme.secondary.withOpacity(0.10),
+                    theme.colorScheme.surface,
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Main content
+          Column(
             children: [
-              // Decorative Background, can swap gradients/colors here
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        theme.colorScheme.primary.withOpacity(0.13),
-                        theme.colorScheme.secondary.withOpacity(0.10),
-                        theme.colorScheme.surface,
+              // The carousel image area
+              Expanded(
+                flex: 2,
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: pages.length,
+                  onPageChanged: (int index) =>
+                      setState(() => _currentPage = index),
+                  itemBuilder: (_, i) {
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      padding: EdgeInsets.symmetric(horizontal: 38.0),
+                      child: Image.asset(
+                        pages[i].image,
+                        fit: BoxFit.contain,
+                        height: size.height * 0.30,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              // The info panel with clipped background
+              Expanded(
+                flex: 2,
+                child: ClipPath(
+                  clipper: IntroClipper(),
+                  child: Container(
+                    width: size.width,
+                    color: theme.colorScheme.surface,
+                    padding: const EdgeInsets.symmetric(horizontal: 36.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 55),
+                        Text(
+                          pages[_currentPage].title,
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: theme.colorScheme.primary,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        Text(
+                          pages[_currentPage].description,
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                            color: theme.colorScheme.secondary,
+                            fontSize: 15.5,
+                            fontWeight: FontWeight.w500,
+                            height: 1.4,
+                          ),
+                        ),
+                        const Spacer(),
+                        _buildBottomControls(theme),
+                        const SizedBox(height: 25),
                       ],
                     ),
                   ),
                 ),
               ),
-              // Main content
-              Column(
-                children: [
-                  // The carousel image area
-                  Expanded(
-                    flex: 2,
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemCount: pages.length,
-                      onPageChanged: (int index) =>
-                          setState(() => _currentPage = index),
-                      itemBuilder: (_, i) {
-                        return AnimatedContainer(
-                          duration: const Duration(milliseconds: 300),
-                          padding: EdgeInsets.symmetric(horizontal: 38.0),
-                          child: Image.asset(
-                            pages[i].image,
-                            fit: BoxFit.contain,
-                            height: size.height * 0.30,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  // The info panel with clipped background
-                  Expanded(
-                    flex: 2,
-                    child: ClipPath(
-                      clipper: IntroClipper(),
-                      child: Container(
-                        width: size.width,
-                        color: theme.colorScheme.surface,
-                        padding: const EdgeInsets.symmetric(horizontal: 36.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(height: 55),
-                            Text(
-                              pages[_currentPage].title,
-                              textAlign: TextAlign.center,
-                              style: theme.textTheme.headlineMedium?.copyWith(
-                                fontWeight: FontWeight.w800,
-                                color: theme.colorScheme.primary,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                            const SizedBox(height: 18),
-                            Text(
-                              pages[_currentPage].description,
-                              textAlign: TextAlign.center,
-                              style: theme.textTheme.bodyLarge?.copyWith(
-                                color: theme.colorScheme.secondary,
-                                fontSize: 15.5,
-                                fontWeight: FontWeight.w500,
-                                height: 1.4,
-                              ),
-                            ),
-                            const Spacer(),
-                            _buildBottomControls(theme),
-                            const SizedBox(height: 25),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }

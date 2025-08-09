@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:soulscripter/screens/quote_composer.dart';
+import 'package:soulscripter/screens/main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,12 +32,12 @@ class _LoginScreenState extends State<LoginScreen> {
       ).showSnackBar(SnackBar(content: Text('Logging in as $_email')));
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const QuoteComposer()),
+        MaterialPageRoute(builder: (context) => const MainScreen()),
       );
     }
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const QuoteComposer()),
+      MaterialPageRoute(builder: (context) => const MainScreen()),
     );
   }
 

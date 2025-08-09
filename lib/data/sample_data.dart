@@ -1,21 +1,11 @@
-/// Contains sample data for the application.
 class SampleData {
-  /// A list of sample user data.
-  ///
-  /// Each user is represented as a map with the following keys:
-  /// - `name`: The name of the user.
-  /// - `email`: The email address of the user.
-  /// - `bio`: A short biography of the user.
-  /// - `profilePicture`: The URL of the user's profile picture (currently null).
-  /// - `followers`: A list of user IDs who follow this user.
-  /// - `following`: A list of user IDs whom this user follows.
-  /// - `postsCount`: The number of posts made by the user.
-  /// - `createdAt`: The timestamp when the user account was created.
+  // Existing users list remains unchanged
   static final List<Map<String, dynamic>> users = [
     {
       'name': 'Maya Chen',
       'email': 'maya.chen@example.com',
-      'bio': '🌸 Poet & Dreamer | Finding beauty in everyday moments | Coffee enthusiast ☕',
+      'bio':
+          '🌸 Poet & Dreamer | Finding beauty in everyday moments | Coffee enthusiast ☕',
       'profilePicture': null,
       'followers': ['user_002', 'user_003', 'user_004', 'user_005'],
       'following': ['user_002', 'user_003'],
@@ -25,7 +15,8 @@ class SampleData {
     {
       'name': 'Alex Rivera',
       'email': 'alex.rivera@example.com',
-      'bio': '✨ Storyteller at heart | Inspiration seeker | Life is a beautiful journey',
+      'bio':
+          '✨ Storyteller at heart | Inspiration seeker | Life is a beautiful journey',
       'profilePicture': null,
       'followers': ['user_001', 'user_003', 'user_005'],
       'following': ['user_001', 'user_004'],
@@ -35,7 +26,8 @@ class SampleData {
     {
       'name': 'Jordan Blake',
       'email': 'jordan.blake@example.com',
-      'bio': '📝 Words have power | Motivational quotes | Spreading positivity daily',
+      'bio':
+          '📝 Words have power | Motivational quotes | Spreading positivity daily',
       'profilePicture': null,
       'followers': ['user_001', 'user_002', 'user_004'],
       'following': ['user_001', 'user_002', 'user_005'],
@@ -64,28 +56,11 @@ class SampleData {
     },
   ];
 
-  /// A list of sample quote data.
-  ///
-  /// Each quote is represented as a map with the following keys:
-  /// - `text`: The content of the quote.
-  /// - `authorId`: The ID of the user who authored the quote.
-  /// - `authorName`: The name of the user who authored the quote.
-  /// - `authorAvatar`: The URL of the author's avatar (currently null).
-  /// - `type`: The type of the post (e.g., 'quote', 'poem', 'story').
-  /// - `likes`: A list of user IDs who liked the quote.
-  /// - `commentCount`: The number of comments on the quote.
-  /// - `createdAt`: The timestamp when the quote was created.
-  /// - `design`: A map containing design details for the quote display:
-  ///   - `fontFamily`: The font family for the quote text.
-  ///   - `fontSize`: The font size for the quote text.
-  ///   - `alignment`: The text alignment (e.g., 'center', 'left').
-  ///   - `backgroundColor`: The background color for the quote.
-  ///   - `backgroundImage`: The background image for the quote (currently null).
-  ///   - `textColor`: The text color for the quote.
-  /// - `tags`: A list of tags associated with the quote.
+  // Updated quotes list with Unsplash image URLs as background images
   static final List<Map<String, dynamic>> quotes = [
     {
-      'text': 'The only way to do great work is to love what you do. Passion fuels purpose, and purpose creates lasting impact.',
+      'text':
+          'The only way to do great work is to love what you do. Passion fuels purpose, and purpose creates lasting impact.',
       'authorId': 'user_001',
       'authorName': 'Maya Chen',
       'authorAvatar': null,
@@ -97,14 +72,16 @@ class SampleData {
         'fontFamily': 'Inter',
         'fontSize': 20.0,
         'alignment': 'center',
-        'backgroundColor': 4285622158, // Purple gradient
-        'backgroundImage': null,
+        'backgroundColor': 4285622158, // Purple gradient fallback color
+        'backgroundImage':
+            'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80', // purple twilight sky
         'textColor': 4294967295, // White
       },
       'tags': ['motivation', 'work', 'passion'],
     },
     {
-      'text': 'In the quiet moments,\nwhere thoughts dance free,\nI find the rhythm of my soul,\nand whisper poetry.',
+      'text':
+          'In the quiet moments,\nwhere thoughts dance free,\nI find the rhythm of my soul,\nand whisper poetry.',
       'authorId': 'user_002',
       'authorName': 'Alex Rivera',
       'authorAvatar': null,
@@ -116,14 +93,16 @@ class SampleData {
         'fontFamily': 'Crimson Text',
         'fontSize': 18.0,
         'alignment': 'left',
-        'backgroundColor': 4283190348, // Soft blue
-        'backgroundImage': null,
-        'textColor': 4294967295,
+        'backgroundColor': 4283190348, // Soft blue fallback color
+        'backgroundImage':
+            'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80', // calm ocean
+        'textColor': 4294967295, // White
       },
       'tags': ['poetry', 'soul', 'reflection'],
     },
     {
-      'text': 'Success is not final, failure is not fatal. It is the courage to continue that counts most.',
+      'text':
+          'Success is not final, failure is not fatal. It is the courage to continue that counts most.',
       'authorId': 'user_003',
       'authorName': 'Jordan Blake',
       'authorAvatar': null,
@@ -135,14 +114,16 @@ class SampleData {
         'fontFamily': 'Roboto',
         'fontSize': 22.0,
         'alignment': 'center',
-        'backgroundColor': 4278239141, // Deep green
-        'backgroundImage': null,
-        'textColor': 4294967295,
+        'backgroundColor': 4278239141, // Deep green fallback
+        'backgroundImage':
+            'https://images.unsplash.com/photo-1468071174046-657d9d351a40?auto=format&fit=crop&w=800&q=80', // lush green forest
+        'textColor': 4294967295, // White
       },
       'tags': ['success', 'courage', 'motivation'],
     },
     {
-      'text': 'She stood at the crossroads of her dreams, knowing that every step forward was a choice to believe in herself. The path was uncertain, but her determination was unwavering.',
+      'text':
+          'She stood at the crossroads of her dreams, knowing that every step forward was a choice to believe in herself. The path was uncertain, but her determination was unwavering.',
       'authorId': 'user_004',
       'authorName': 'Sam Taylor',
       'authorAvatar': null,
@@ -154,14 +135,16 @@ class SampleData {
         'fontFamily': 'Lora',
         'fontSize': 16.0,
         'alignment': 'left',
-        'backgroundColor': 4286086977, // Warm orange
-        'backgroundImage': null,
-        'textColor': 4294967295,
+        'backgroundColor': 4286086977, // Warm orange fallback
+        'backgroundImage':
+            'https://images.unsplash.com/photo-1500534623283-312aade485b8?auto=format&fit=crop&w=800&q=80', // warm sunrise landscape
+        'textColor': 4294967295, // White
       },
       'tags': ['dreams', 'determination', 'journey'],
     },
     {
-      'text': 'The best time to plant a tree was 20 years ago. The second best time is now.',
+      'text':
+          'The best time to plant a tree was 20 years ago. The second best time is now.',
       'authorId': 'user_005',
       'authorName': 'Casey Morgan',
       'authorAvatar': null,
@@ -173,14 +156,16 @@ class SampleData {
         'fontFamily': 'Playfair Display',
         'fontSize': 19.0,
         'alignment': 'center',
-        'backgroundColor': 4282271024, // Forest green
-        'backgroundImage': null,
-        'textColor': 4294967295,
+        'backgroundColor': 4282271024, // Forest green fallback
+        'backgroundImage':
+            'https://images.unsplash.com/photo-1506744038136-46273834b3fc?auto=format&fit=crop&w=800&q=80', // big tree in light
+        'textColor': 4294967295, // White
       },
       'tags': ['wisdom', 'action', 'time'],
     },
     {
-      'text': 'Stars above remind me\nthat light exists\neven in darkness.\nHope whispers softly,\n"You are not alone."',
+      'text':
+          'Stars above remind me\nthat light exists\neven in darkness.\nHope whispers softly,\n"You are not alone."',
       'authorId': 'user_001',
       'authorName': 'Maya Chen',
       'authorAvatar': null,
@@ -192,14 +177,16 @@ class SampleData {
         'fontFamily': 'Dancing Script',
         'fontSize': 17.0,
         'alignment': 'center',
-        'backgroundColor': 4279308047, // Deep purple
-        'backgroundImage': null,
-        'textColor': 4294967295,
+        'backgroundColor': 4279308047, // Deep purple fallback
+        'backgroundImage':
+            'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=800&q=80', // starry night sky
+        'textColor': 4294967295, // White
       },
       'tags': ['hope', 'stars', 'inspiration'],
     },
     {
-      'text': 'Your limitation—it\'s only your imagination. Break free from the chains of doubt.',
+      'text':
+          'Your limitation—it\'s only your imagination. Break free from the chains of doubt.',
       'authorId': 'user_003',
       'authorName': 'Jordan Blake',
       'authorAvatar': null,
@@ -211,14 +198,16 @@ class SampleData {
         'fontFamily': 'Montserrat',
         'fontSize': 21.0,
         'alignment': 'center',
-        'backgroundColor': 4294940928, // Bright orange
-        'backgroundImage': null,
+        'backgroundColor': 4294940928, // Bright orange fallback
+        'backgroundImage':
+            'https://images.unsplash.com/photo-1500534623283-312aade485b9?auto=format&fit=crop&w=800&q=80', // bright sunset
         'textColor': 4278190080, // Black
       },
       'tags': ['limitation', 'imagination', 'breakthrough'],
     },
     {
-      'text': 'Life is what happens when you\'re busy making other plans. Embrace the unexpected moments.',
+      'text':
+          'Life is what happens when you\'re busy making other plans. Embrace the unexpected moments.',
       'authorId': 'user_002',
       'authorName': 'Alex Rivera',
       'authorAvatar': null,
@@ -230,23 +219,14 @@ class SampleData {
         'fontFamily': 'Open Sans',
         'fontSize': 18.0,
         'alignment': 'center',
-        'backgroundColor': 4286741760, // Coral pink
-        'backgroundImage': null,
-        'textColor': 4294967295,
+        'backgroundColor': 4286741760, // Coral pink fallback
+        'backgroundImage':
+            'https://images.unsplash.com/photo-1506744038136-46273834b3fd?auto=format&fit=crop&w=800&q=80', // pastel sunrise
+        'textColor': 4294967295, // White
       },
       'tags': ['life', 'planning', 'unexpected'],
     },
   ];
-
-  /// A list of sample comment data.
-  ///
-  /// Each comment is represented as a map with the following keys:
-  /// - `quoteId`: The ID of the quote to which the comment belongs.
-  /// - `userId`: The ID of the user who made the comment.
-  /// - `userName`: The name of the user who made the comment.
-  /// - `userAvatar`: The URL of the user's avatar (currently null).
-  /// - `text`: The content of the comment.
-  /// - `createdAt`: The timestamp when the comment was created.
   static final List<Map<String, dynamic>> comments = [
     {
       'quoteId': 'quote_001',

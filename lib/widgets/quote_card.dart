@@ -1,202 +1,103 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:share_plus/share_plus.dart';
+import 'dart:io';
 
+class QuoteCard extends StatelessWidget {
+  final Map<String, dynamic> quoteData;
 
-class QuoteCard extends StatefulWidget {
-  final Map<String, dynamic> quote;
-  const QuoteCard({super.key, required this.quote});
-
-  @override
-  State<QuoteCard> createState() => _QuoteCardState();
-}
-
-class _QuoteCardState extends State<QuoteCard> {
-  late int likeCount;
-  bool liked = false;
+  const QuoteCard({super.key, required this.quoteData});
 
   @override
-  void initState() {
-    super.initState();
-    likeCount = (widget.quote['likes'] as List).length;
-  }
-
-  void _toggleLike() {
-    setState(() {
-      liked = !liked;
-      likeCount += liked ? 1 : -1;
-    });
-  }
-
-  void _onShare() {
-    final textToShare =
-        '"${widget.quote['text']}"\n- ${widget.quote['authorName']}';
-    Share.share(textToShare);
-  }
-
-  void _onComment() {
-    // Navigate to comment screen, open modal, etc.
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Comment pressed! (Implement comment UI/navigation)'),
-      ),
-    );
-  }
-
-@override
   Widget build(BuildContext context) {
-    final design = widget.quote['design'];
-    final dynamic bgImageField = design['backgroundImage'];
-    DecorationImage? backgroundImage;
+    final design = quoteData['design'];
 
-    if (bgImageField != null &&
-        bgImageField is String &&
-        bgImageField.isNotEmpty) {
-      if (bgImageField.startsWith('http')) {
-        backgroundImage = DecorationImage(
-          image: NetworkImage(bgImageField),
-          fit: BoxFit.cover,
-        );
-      } else {
-        backgroundImage = DecorationImage(
-          image: AssetImage(bgImageField),
-          fit: BoxFit.cover,
-        );
-      }
+    // Parse color values safely, converting int to Color
+    Color bgColor = design['backgroundColor'] != null
+        ? Color(design['backgroundColor'])
+        : Colors.white;
+    Color textColor = design['textColor'] != null
+        ? Color(design['textColor'])
+        : Colors.black;
+
+    // Parse text alignment from string
+    TextAlign textAlign;
+    switch (design['alignment']) {
+      case 'center':
+        textAlign = TextAlign.center;
+        break;
+      case 'right':
+        textAlign = TextAlign.right;
+        break;
+      case 'left':
+      default:
+        textAlign = TextAlign.left;
     }
 
-    final Color quoteBgColor = backgroundImage == null
-        ? Color(design['backgroundColor'])
-        : Colors.transparent;
+    // Get fixed text position or default
+    double xFraction = design['xFraction'] ?? 0.5;
+    double yFraction = design['yFraction'] ?? 0.5;
 
-    final Color textColor = Color(design['textColor']);
-    final String fontFamily = design['fontFamily'] ?? 'Roboto';
-    final double fontSize = (design['fontSize'] is double)
-        ? design['fontSize']
-        : (design['fontSize'] as num).toDouble();
-    final TextAlign align = (design['alignment'] == 'center')
-        ? TextAlign.center
-        : TextAlign.left;
+    // Background image, if any, expected to be File or null
+    File? bgImage = design['bgImage'];
 
     return AspectRatio(
       aspectRatio: 1,
       child: Material(
         elevation: 4,
         borderRadius: BorderRadius.circular(26),
-        color: Colors.transparent,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(26),
-          child: Column(
-            children: [
-              // Quote area with background image/color
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: quoteBgColor,
-                    image: backgroundImage,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        widget.quote['text'],
-                        textAlign: align,
-                        style: GoogleFonts.getFont(
-                          fontFamily,
-                          fontSize: fontSize,
-                          color: textColor,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final double side = constraints.maxWidth < constraints.maxHeight
+                  ? constraints.maxWidth
+                  : constraints.maxHeight;
 
-              // Separate author and action row with distinct background
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 10.0,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors
-                      .white, // Set this to your desired row background color
-                  borderRadius: const BorderRadius.vertical(
-                    bottom: Radius.circular(26),
+              return Center(
+                child: SizedBox(
+                  width: side,
+                  height: side,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: bgImage == null ? bgColor : null,
+                      image: bgImage != null
+                          ? DecorationImage(
+                              image: FileImage(bgImage),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
+                    ),
+                    child: Align(
+                      alignment: Alignment(
+                        xFraction * 2 - 1,
+                        yFraction * 2 - 1,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          quoteData['text'],
+                          textAlign: textAlign,
+                          style: GoogleFonts.getFont(
+                            design['fontFamily'] ?? 'Roboto',
+                            fontSize: (design['fontSize'] is double)
+                                ? design['fontSize']
+                                : (design['fontSize'] as num).toDouble(),
+                            color: textColor,
+                            backgroundColor: bgImage != null
+                                ? Colors.white54
+                                : null,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundColor: Colors.grey[300],
-                      child: Text(
-                        _getAuthorInitials(widget.quote['authorName']),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        widget.quote['authorName'],
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        liked ? Icons.favorite : Icons.favorite_border,
-                        color: Colors.pink,
-                        size: 20,
-                      ),
-                      onPressed: _toggleLike,
-                      tooltip: liked ? "Unlike" : "Like",
-                    ),
-                    Text('$likeCount'),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.comment,
-                        color: Colors.blue,
-                        size: 20,
-                      ),
-                      onPressed: _onComment,
-                      tooltip: "Comment",
-                    ),
-                    Text('${widget.quote['commentCount']}'),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.share,
-                        color: Colors.teal,
-                        size: 20,
-                      ),
-                      onPressed: _onShare,
-                      tooltip: "Share",
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              );
+            },
           ),
         ),
       ),
     );
   }
-
-  static String _getAuthorInitials(String name) {
-    if (name.trim().isEmpty) return "";
-    var parts = name.trim().split(" ");
-    if (parts.length == 1) return parts[0][0].toUpperCase();
-    return (parts[0][0] + parts.last[0]).toUpperCase();
-  }
-
 }
