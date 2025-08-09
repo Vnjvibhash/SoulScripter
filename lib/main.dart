@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:soulscripter/providers/auth_provider.dart';
 import 'package:soulscripter/screens/splash_screen.dart';
 import 'package:soulscripter/theme.dart';
 
 /// The main entry point for the application.
-void main() => runApp(const MyApp());
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
+      child: const MyApp(),
+    ),
+  );
+}
+
 
 /// The root widget of the application.
 class MyApp extends StatelessWidget {

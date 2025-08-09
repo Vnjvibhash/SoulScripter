@@ -1,8 +1,9 @@
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:soulscripter/data/intro_content.dart';
 import 'package:soulscripter/screens/login_screen.dart';
 import 'package:soulscripter/widgets/intro_clipper.dart';
-import 'package:flutter/material.dart';
+import 'package:soulscripter/widgets/gradient_button.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -20,12 +21,11 @@ class _IntroScreenState extends State<IntroScreen> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
 
-    // Set transparent status bar (works on both Android and iOS)
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       body: Stack(
         children: [
-          // Decorative Background, can swap gradients/colors here
+          // Background Gradient
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -41,10 +41,10 @@ class _IntroScreenState extends State<IntroScreen> {
               ),
             ),
           ),
-          // Main content
+          // Main Content
           Column(
             children: [
-              // The carousel image area
+              // Carousel section
               Expanded(
                 flex: 2,
                 child: PageView.builder(
@@ -52,20 +52,18 @@ class _IntroScreenState extends State<IntroScreen> {
                   itemCount: pages.length,
                   onPageChanged: (int index) =>
                       setState(() => _currentPage = index),
-                  itemBuilder: (_, i) {
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      padding: EdgeInsets.symmetric(horizontal: 38.0),
-                      child: Image.asset(
-                        pages[i].image,
-                        fit: BoxFit.contain,
-                        height: size.height * 0.30,
-                      ),
-                    );
-                  },
+                  itemBuilder: (_, i) => AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    padding: const EdgeInsets.symmetric(horizontal: 38.0),
+                    child: Image.asset(
+                      pages[i].image,
+                      fit: BoxFit.contain,
+                      height: size.height * 0.30,
+                    ),
+                  ),
                 ),
               ),
-              // The info panel with clipped background
+              // Info & Button Section
               Expanded(
                 flex: 2,
                 child: ClipPath(
@@ -117,7 +115,7 @@ class _IntroScreenState extends State<IntroScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Page dots with nice animation
+        // Page Dots
         Row(
           children: List.generate(
             pages.length,
@@ -143,8 +141,9 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget _buildNextButton(ThemeData theme) {
     bool isLastPage = _currentPage == pages.length - 1;
 
-    return GestureDetector(
-      onTap: () {
+    return GradientButton(
+      text: isLastPage ? "Get Started" : "Next",
+      onPressed: () {
         if (isLastPage) {
           Navigator.pushReplacement(
             context,
@@ -157,50 +156,21 @@ class _IntroScreenState extends State<IntroScreen> {
           );
         }
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 14),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [theme.colorScheme.primary, theme.colorScheme.secondary],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
+      gradientColors: [theme.colorScheme.primary, theme.colorScheme.secondary],
+      textStyle: GoogleFonts.lobster(
+        fontSize: 18,
+        color: Colors.white,
+        shadows: [
+          Shadow(
+            blurRadius: 6,
+            color: Theme.of(context).focusColor,
+            offset: const Offset(2, 2),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: theme.colorScheme.primary.withOpacity(0.12),
-              blurRadius: 16,
-              offset: const Offset(0, 8),
-            ),
-          ],
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              isLastPage ? "Get Started" : "Next",
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16.5,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.2,
-              ),
-            ),
-            if (!isLastPage) ...[
-              const SizedBox(width: 9),
-              const Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.white,
-                size: 18,
-              ),
-            ],
-            if (isLastPage) ...[
-              const SizedBox(width: 6),
-              const Icon(Icons.check_circle, color: Colors.white, size: 20),
-            ],
-          ],
-        ),
+        ],
       ),
+      icon: isLastPage
+          ? const Icon(Icons.check_circle, color: Colors.white, size: 20)
+          : const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 18),
     );
   }
 }

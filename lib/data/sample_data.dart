@@ -1,5 +1,5 @@
 class SampleData {
-  // Existing users list remains unchanged
+  // Existing users list
   static final List<Map<String, dynamic>> users = [
     {
       'name': 'Maya Chen',
@@ -55,8 +55,7 @@ class SampleData {
       'createdAt': 'TIMESTAMP',
     },
   ];
-
-  // Updated quotes list with Unsplash image URLs as background images
+// Existing quotes list with fontWeight added in design
   static final List<Map<String, dynamic>> quotes = [
     {
       'text':
@@ -71,11 +70,12 @@ class SampleData {
       'design': {
         'fontFamily': 'Inter',
         'fontSize': 20.0,
+        'fontWeight': 'normal',
         'alignment': 'center',
-        'backgroundColor': 4285622158, // Purple gradient fallback color
+        'backgroundColor': 4285622158,
         'backgroundImage':
-            'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80', // purple twilight sky
-        'textColor': 4294967295, // White
+            'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+        'textColor': 4294967295,
       },
       'tags': ['motivation', 'work', 'passion'],
     },
@@ -92,11 +92,12 @@ class SampleData {
       'design': {
         'fontFamily': 'Crimson Text',
         'fontSize': 18.0,
+        'fontWeight': 'normal',
         'alignment': 'left',
-        'backgroundColor': 4283190348, // Soft blue fallback color
+        'backgroundColor': 4283190348,
         'backgroundImage':
-            'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80', // calm ocean
-        'textColor': 4294967295, // White
+            'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80',
+        'textColor': 4294967295,
       },
       'tags': ['poetry', 'soul', 'reflection'],
     },
@@ -113,11 +114,12 @@ class SampleData {
       'design': {
         'fontFamily': 'Roboto',
         'fontSize': 22.0,
+        'fontWeight': 'normal',
         'alignment': 'center',
-        'backgroundColor': 4278239141, // Deep green fallback
+        'backgroundColor': 4278239141,
         'backgroundImage':
-            'https://images.unsplash.com/photo-1468071174046-657d9d351a40?auto=format&fit=crop&w=800&q=80', // lush green forest
-        'textColor': 4294967295, // White
+            'https://images.unsplash.com/photo-1468071174046-657d9d351a40?auto=format&fit=crop&w=800&q=80',
+        'textColor': 4294967295,
       },
       'tags': ['success', 'courage', 'motivation'],
     },
@@ -134,11 +136,12 @@ class SampleData {
       'design': {
         'fontFamily': 'Lora',
         'fontSize': 16.0,
+        'fontWeight': 'normal',
         'alignment': 'left',
-        'backgroundColor': 4286086977, // Warm orange fallback
+        'backgroundColor': 4286086977,
         'backgroundImage':
-            'https://images.unsplash.com/photo-1500534623283-312aade485b8?auto=format&fit=crop&w=800&q=80', // warm sunrise landscape
-        'textColor': 4294967295, // White
+            'https://images.unsplash.com/photo-1500534623283-312aade485b8?auto=format&fit=crop&w=800&q=80',
+        'textColor': 4294967295,
       },
       'tags': ['dreams', 'determination', 'journey'],
     },
@@ -155,11 +158,12 @@ class SampleData {
       'design': {
         'fontFamily': 'Playfair Display',
         'fontSize': 19.0,
+        'fontWeight': 'bold',
         'alignment': 'center',
-        'backgroundColor': 4282271024, // Forest green fallback
+        'backgroundColor': 4282271024,
         'backgroundImage':
-            'https://images.unsplash.com/photo-1506744038136-46273834b3fc?auto=format&fit=crop&w=800&q=80', // big tree in light
-        'textColor': 4294967295, // White
+            'https://images.unsplash.com/photo-1506744038136-46273834b3fc?auto=format&fit=crop&w=800&q=80',
+        'textColor': 4294967295,
       },
       'tags': ['wisdom', 'action', 'time'],
     },
@@ -176,11 +180,12 @@ class SampleData {
       'design': {
         'fontFamily': 'Dancing Script',
         'fontSize': 17.0,
+        'fontWeight': 'normal',
         'alignment': 'center',
-        'backgroundColor': 4279308047, // Deep purple fallback
+        'backgroundColor': 4279308047,
         'backgroundImage':
-            'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=800&q=80', // starry night sky
-        'textColor': 4294967295, // White
+            'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=800&q=80',
+        'textColor': 4294967295,
       },
       'tags': ['hope', 'stars', 'inspiration'],
     },
@@ -197,11 +202,12 @@ class SampleData {
       'design': {
         'fontFamily': 'Montserrat',
         'fontSize': 21.0,
+        'fontWeight': 'bold',
         'alignment': 'center',
-        'backgroundColor': 4294940928, // Bright orange fallback
+        'backgroundColor': 4294940928,
         'backgroundImage':
-            'https://images.unsplash.com/photo-1500534623283-312aade485b9?auto=format&fit=crop&w=800&q=80', // bright sunset
-        'textColor': 4278190080, // Black
+            'https://images.unsplash.com/photo-1500534623283-312aade485b9?auto=format&fit=crop&w=800&q=80',
+        'textColor': 4278190080,
       },
       'tags': ['limitation', 'imagination', 'breakthrough'],
     },
@@ -218,15 +224,17 @@ class SampleData {
       'design': {
         'fontFamily': 'Open Sans',
         'fontSize': 18.0,
+        'fontWeight': 'normal',
         'alignment': 'center',
-        'backgroundColor': 4286741760, // Coral pink fallback
+        'backgroundColor': 4286741760,
         'backgroundImage':
-            'https://images.unsplash.com/photo-1506744038136-46273834b3fd?auto=format&fit=crop&w=800&q=80', // pastel sunrise
-        'textColor': 4294967295, // White
+            'https://images.unsplash.com/photo-1506744038136-46273834b3fd?auto=format&fit=crop&w=800&q=80',
+        'textColor': 4294967295,
       },
       'tags': ['life', 'planning', 'unexpected'],
     },
   ];
+  // Existing comments list
   static final List<Map<String, dynamic>> comments = [
     {
       'quoteId': 'quote_001',

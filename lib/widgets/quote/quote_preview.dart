@@ -10,6 +10,7 @@ class QuotePreview extends StatefulWidget {
   final Color bgColor;
   final Color textColor;
   final double fontSize;
+  final FontWeight fontWeight;
   final TextAlign textAlign;
   final double initialXFraction;
   final double initialYFraction;
@@ -24,6 +25,7 @@ class QuotePreview extends StatefulWidget {
     required this.bgColor,
     required this.textColor,
     required this.fontSize,
+    required this.fontWeight,
     required this.textAlign,
     this.initialXFraction = 0.5,
     this.initialYFraction = 0.5,
@@ -97,7 +99,7 @@ class _QuotePreviewState extends State<QuotePreview> {
                         backgroundColor: widget.backgroundImage != null
                             ? Colors.white54
                             : null,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: widget.fontWeight,
                       ),
                     ),
                   ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:soulscripter/widgets/quote_card.dart';
-import 'package:soulscripter/widgets/quote_footer.dart';
+import 'package:soulscripter/widgets/quote/quote_card.dart';
+import 'package:soulscripter/widgets/quote/quote_footer.dart';
 
 class QuotePost extends StatelessWidget {
   final Map<String, dynamic> quote;

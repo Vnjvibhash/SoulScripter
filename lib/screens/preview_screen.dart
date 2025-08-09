@@ -1,15 +1,21 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:soulscripter/screens/caption_screen.dart';
 import 'package:soulscripter/widgets/color_picker_dialog.dart';
-import 'package:soulscripter/widgets/quote_preview.dart';
+import 'package:soulscripter/widgets/gradient_button.dart';
+import 'package:soulscripter/widgets/quote/quote_preview.dart';
 
 class PreviewScreen extends StatefulWidget {
   final String quote;
   final String fontFamily;
 
-  const PreviewScreen({super.key, required this.quote, required this.fontFamily});
+  const PreviewScreen({
+    super.key,
+    required this.quote,
+    required this.fontFamily,
+  });
 
   @override
   State<PreviewScreen> createState() => _PreviewScreenState();
@@ -22,6 +28,9 @@ class _PreviewScreenState extends State<PreviewScreen> {
   double _fontSize = 28;
   TextAlign _align = TextAlign.center;
   late String _fontFamily;
+  bool _isBold = false;
+  double _xFraction = 0.5;
+  double _yFraction = 0.5;
 
   @override
   void initState() {
@@ -66,7 +75,17 @@ class _PreviewScreenState extends State<PreviewScreen> {
               bgColor: _bgColor,
               textColor: _textColor,
               fontSize: _fontSize,
+              fontWeight: _isBold ? FontWeight.bold : FontWeight.normal,
               textAlign: _align,
+              initialXFraction: _xFraction,
+              initialYFraction: _yFraction,
+              isEditable: true,
+              onPositionChanged: (x, y) {
+                setState(() {
+                  _xFraction = x;
+                  _yFraction = y;
+                });
+              },
             ),
           ),
           Padding(
@@ -143,6 +162,14 @@ class _PreviewScreenState extends State<PreviewScreen> {
                       tooltip: 'Text color',
                     ),
                     IconButton(
+                      icon: Icon(
+                        Icons.format_bold,
+                        color: _isBold ? Colors.blue : Colors.grey,
+                      ),
+                      tooltip: 'Toggle Bold',
+                      onPressed: () => setState(() => _isBold = !_isBold),
+                    ),
+                    IconButton(
                       icon: const Icon(Icons.image),
                       onPressed: _pickImage,
                       tooltip: "Pick image",
@@ -152,24 +179,49 @@ class _PreviewScreenState extends State<PreviewScreen> {
               ],
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => CaptionScreen(
-                    quote: widget.quote,
-                    fontFamily: _fontFamily,
-                    fontSize: _fontSize,
-                    textAlign: _align,
-                    bgColor: _bgColor,
-                    textColor: _textColor,
-                    backgroundImage: _backgroundImage,
+          Container(
+            padding: const EdgeInsets.all(16),
+            width: double.infinity,
+            child: GradientButton(
+              text: 'Add Caption & Hashtags',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => CaptionScreen(
+                      quote: widget.quote,
+                      fontFamily: _fontFamily,
+                      fontSize: _fontSize,
+                      textAlign: _align,
+                      bgColor: _bgColor,
+                      textColor: _textColor,
+                      fontWeight: _isBold ? FontWeight.bold : FontWeight.normal,
+                      backgroundImage: _backgroundImage,
+                      xFraction: _xFraction,
+                      yFraction: _yFraction,
+                    ),
                   ),
-                ),
-              );
-            },
-            child: const Text('Next: Add Caption & Hashtags'),
+                );
+              },
+              gradientColors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.secondary,
+              ],
+              borderRadius: 16,
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+              showShadow: true,
+              textStyle: GoogleFonts.pacifico(
+                fontSize: 16,
+                color: Colors.white,
+                shadows: [
+                  Shadow(
+                    blurRadius: 6,
+                    color: Theme.of(context).focusColor,
+                    offset: const Offset(2, 2),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

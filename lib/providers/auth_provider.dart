@@ -1,32 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-/// A provider class for managing authentication state.
-///
-/// This class can be used to hold user authentication status, user data,
-/// and methods for signing in, signing out, and registering users.
-class AuthProvider with ChangeNotifier {
-  // Example property to hold authentication status
-  bool _isAuthenticated = false;
+class AuthProvider extends ChangeNotifier {
+  String? _username;
 
-  /// Returns true if the user is authenticated, false otherwise.
-  bool get isAuthenticated => _isAuthenticated;
+  String? get username => _username;
 
-  /// Example method to simulate user login.
-  ///
-  /// In a real application, this would involve network requests to an
-  /// authentication server.
-  Future<void> signIn(String email, String password) async {
-    // Simulate network request
-    await Future.delayed(const Duration(seconds: 1));
-    _isAuthenticated = true;
+  bool get isLoggedIn => _username != null;
+
+  Future<void> loadUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    _username = prefs.getString('username');
     notifyListeners();
   }
 
-  /// Example method to simulate user logout.
-  Future<void> signOut() async {
-    // Simulate network request
-    await Future.delayed(const Duration(seconds: 1));
-    _isAuthenticated = false;
+  Future<void> login(String email) async {
+    final prefs = await SharedPreferences.getInstance();
+    final prefix = _extractUsernameFromEmail(email);
+    _username = prefix;
+    await prefs.setString('username', prefix);
     notifyListeners();
+  }
+
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('username');
+    _username = null;
+    notifyListeners();
+  }
+
+  String _extractUsernameFromEmail(String email) {
+    if (email.contains('@')) {
+      return email.split('@')[0];
+    }
+    return email;
   }
 }

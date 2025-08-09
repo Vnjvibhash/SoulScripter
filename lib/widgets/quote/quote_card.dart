@@ -19,6 +19,18 @@ class QuoteCard extends StatelessWidget {
         ? Color(design['textColor'])
         : Colors.black;
 
+    FontWeight fontWeight;
+    switch (design['fontWeight']) {
+      case 'normal':
+        fontWeight = FontWeight.normal;
+        break;
+      case 'bold':
+        fontWeight = FontWeight.bold;
+        break;
+      default:
+        fontWeight = FontWeight.normal;
+    }
+
     // Parse text alignment from string
     TextAlign textAlign;
     switch (design['alignment']) {
@@ -86,7 +98,7 @@ class QuoteCard extends StatelessWidget {
                             backgroundColor: bgImage != null
                                 ? Colors.white54
                                 : null,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: fontWeight,
                           ),
                         ),
                       ),

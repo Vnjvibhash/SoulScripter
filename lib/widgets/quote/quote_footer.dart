@@ -30,24 +30,28 @@ class QuoteFooter extends StatelessWidget {
   }
 
   static String _formatCount(int n) {
-    if (n >= 1000)
+    if (n >= 1000) {
       return '${(n / 1000).toStringAsFixed(n % 1000 == 0 ? 0 : 1)}K';
+    }
     return '$n';
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        // Use theme-aware surface color instead of hardcoded white
+        color: theme.colorScheme.surface,
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(26)),
       ),
       child: Row(
         children: [
           CircleAvatar(
             radius: 15,
-            backgroundColor: Colors.grey[300],
+            backgroundColor: theme.colorScheme.onSurface.withOpacity(0.1),
             backgroundImage: authorImage != null && authorImage!.isNotEmpty
                 ? (authorImage!.startsWith('http')
                           ? NetworkImage(authorImage!)
@@ -57,9 +61,9 @@ class QuoteFooter extends StatelessWidget {
             child: (authorImage == null || authorImage!.isEmpty)
                 ? Text(
                     _getAuthorInitials(authorName),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: theme.colorScheme.onSurface,
                       fontSize: 14,
                     ),
                   )
@@ -69,7 +73,11 @@ class QuoteFooter extends StatelessWidget {
           Expanded(
             child: Text(
               authorName,
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: theme.colorScheme.onSurface,
+              ),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -82,22 +90,25 @@ class QuoteFooter extends StatelessWidget {
             onPressed: onLike,
             tooltip: liked ? "Unlike" : "Like",
             padding: EdgeInsets.zero,
-            constraints: BoxConstraints(),
+            constraints: const BoxConstraints(),
           ),
           const SizedBox(width: 2),
-          Text(_formatCount(likeCount), style: const TextStyle(fontSize: 13)),
+          Text(
+            _formatCount(likeCount),
+            style: TextStyle(fontSize: 13, color: theme.colorScheme.onSurface),
+          ),
           const SizedBox(width: 12),
           IconButton(
             icon: const Icon(Icons.comment, color: Colors.blue, size: 20),
             onPressed: onComment,
             tooltip: "Comment",
             padding: EdgeInsets.zero,
-            constraints: BoxConstraints(),
+            constraints: const BoxConstraints(),
           ),
           const SizedBox(width: 2),
           Text(
             _formatCount(commentCount),
-            style: const TextStyle(fontSize: 13),
+            style: TextStyle(fontSize: 13, color: theme.colorScheme.onSurface),
           ),
           const SizedBox(width: 12),
           IconButton(
@@ -105,7 +116,7 @@ class QuoteFooter extends StatelessWidget {
             onPressed: onShare,
             tooltip: "Share",
             padding: EdgeInsets.zero,
-            constraints: BoxConstraints(),
+            constraints: const BoxConstraints(),
           ),
         ],
       ),

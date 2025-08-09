@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:soulscripter/providers/auth_provider.dart';
 import 'package:soulscripter/screens/main_screen.dart';
+import 'package:soulscripter/widgets/gradient_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,40 +16,40 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
-  // ignore: unused_field
   String _password = '';
   bool _obscurePassword = true;
 
   void _togglePasswordVisibility() {
-    setState(() {
-      _obscurePassword = !_obscurePassword;
-    });
+    setState(() => _obscurePassword = !_obscurePassword);
   }
 
-  void _submit() {
+  void _submit() async {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
-      // Implement your login logic here, for example auth API call
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Logging in as $_email')));
+
+      // Store login in AuthProvider so it persists
+      await Provider.of<AuthProvider>(context, listen: false).login(_email);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Logged in as ${_email.split('@')[0]}')),
+      );
+
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const MainScreen()),
       );
     }
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const MainScreen()),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
+
     return Scaffold(
       body: Stack(
         children: [
+          // Background shimmer
           Positioned.fill(
             child: Shimmer(
               duration: const Duration(seconds: 4),
@@ -68,26 +71,25 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
+
           Center(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 36.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    child: Hero(
-                      tag: 'logo',
-                      child: Image.asset('assets/images/logo.png', width: 70),
-                    ),
+                  Hero(
+                    tag: 'logo',
+                    child: Image.asset('assets/images/logo.png', width: 70),
                   ),
+                  const SizedBox(height: 12),
                   Text(
                     'Welcome to SoulScripter',
                     style: GoogleFonts.pacifico(
-                      fontSize: 36,
+                      fontSize: 34,
                       color: primaryColor,
                       shadows: [
-                        Shadow(
+                        const Shadow(
                           blurRadius: 6,
                           color: Colors.black26,
                           offset: Offset(2, 2),
@@ -96,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 8),
                   Text(
                     'Capture & Share your soul\'s voice',
                     style: GoogleFonts.openSans(
@@ -106,6 +108,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 48),
+
+                  // Form
                   Form(
                     key: _formKey,
                     child: Column(
@@ -125,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               return 'Please enter your email';
                             }
                             if (!RegExp(
-                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                              r"^[\w\.-]+@[\w\.-]+\.\w+$",
                             ).hasMatch(value)) {
                               return 'Enter a valid email address';
                             }
@@ -164,46 +168,38 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           onSaved: (value) => _password = value!,
                         ),
-                        const SizedBox(height: 36),
+                        const SizedBox(height: 38),
 
-                        // Login Button
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: _submit,
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                        // Gradient Login Button
+                        GradientButton(
+                          text: 'Log In',
+                          onPressed: _submit,
+                          gradientColors: [
+                            primaryColor,
+                            Theme.of(context).colorScheme.secondary,
+                          ],
+                          borderRadius: 16,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          showShadow: true,
+                          textStyle: GoogleFonts.pacifico(
+                            fontSize: 18,
+                            color: Colors.white,
+                            shadows: [
+                              Shadow(
+                                blurRadius: 6,
+                                color: Theme.of(context).focusColor,
+                                offset: const Offset(2, 2),
                               ),
-                              backgroundColor: primaryColor,
-                              elevation: 6,
-                              shadowColor: primaryColor.withOpacity(0.5),
-                            ),
-                            child: Text(
-                              'Log In',
-                              style: GoogleFonts.pacifico(
-                                fontSize: 20,
-                                color: Colors.white,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 6,
-                                    color: Theme.of(context).focusColor,
-                                    offset: Offset(2, 2),
-                                  ),
-                                ],
-                              ),
-                              textAlign: TextAlign.center,
-                              
-                            ),
+                            ],
                           ),
                         ),
+
                         const SizedBox(height: 16),
 
-                        // Optional: Sign up prompt
+                        // Sign Up prompt
                         TextButton(
                           onPressed: () {
-                            // Navigate to sign up screen
+                            // TODO: Navigate to Sign Up screen
                           },
                           child: Text(
                             "Don't have an account? Sign Up",

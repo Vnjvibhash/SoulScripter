@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:soulscripter/providers/auth_provider.dart';
+import 'package:soulscripter/screens/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -29,6 +32,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     "assets/images/intro3.png",
   ];
 
+  void _logout() async {
+    await Provider.of<AuthProvider>(context, listen: false).logout();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('You have Logged Sucessfully')),
+    );
+    if (!mounted) return;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -40,9 +55,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.logout),
             onPressed: () {
-              // Navigate to settings
+              _logout();
             },
           ),
         ],
