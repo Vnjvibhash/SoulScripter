@@ -98,7 +98,7 @@ class _QuoteComposerState extends State<QuoteComposer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Compose Quote")),
+      appBar: AppBar(title: const Text("Compose Quote"), centerTitle: true),
       body: Column(
         children: [
           Expanded(
@@ -173,10 +173,10 @@ class _QuoteComposerState extends State<QuoteComposer> {
                   ],
                 ),
                 icon: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.white,
-                        size: 18,
-                      )
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                  size: 18,
+                ),
               ),
             ),
           ),

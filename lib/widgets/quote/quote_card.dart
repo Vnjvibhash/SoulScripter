@@ -56,9 +56,7 @@ class QuoteCard extends StatelessWidget {
       aspectRatio: 1,
       child: Material(
         elevation: 4,
-        borderRadius: BorderRadius.circular(26),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(26),
           child: LayoutBuilder(
             builder: (context, constraints) {
               final double side = constraints.maxWidth < constraints.maxHeight

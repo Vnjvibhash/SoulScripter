@@ -33,7 +33,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('SoulScripter Quotes')),
+      appBar: AppBar(
+        title: const Text('SoulScripter Quotes'),
+        centerTitle: true,
+      ),
       backgroundColor: Colors.grey[100],
       body: Stack(
         children: [

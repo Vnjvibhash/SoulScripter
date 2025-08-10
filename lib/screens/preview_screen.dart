@@ -63,7 +63,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Preview & Adjust")),
+      appBar: AppBar(title: const Text("Preview & Adjust"), centerTitle: true),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
