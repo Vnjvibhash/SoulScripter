@@ -14,7 +14,7 @@ class QuoteComposer extends StatefulWidget {
 class _QuoteComposerState extends State<QuoteComposer> {
   final TextEditingController _textController = TextEditingController(
     text:
-        "This story can inspire your followers to chase their dreams no matter the challenges. Would you like me to help format it nicely for your app or create a quote card version?",
+        "This story can\ninspire your followers\nto\nchase their dreams\nno matter the challenges.\nWould you like me to help format it nicely\nfor your app\nor\ncreate a quote card version?",
   );
 
   String _quote = '';

@@ -25,8 +25,8 @@ class _PreviewScreenState extends State<PreviewScreen> {
   File? _backgroundImage;
   Color _bgColor = Colors.white;
   Color _textColor = Colors.black;
-  double _fontSize = 28;
-  TextAlign _align = TextAlign.center;
+  double _fontSize = 16;
+  TextAlign _align = TextAlign.left;
   late String _fontFamily;
   bool _isBold = false;
   double _xFraction = 0.5;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:soulscripter/providers/auth_provider.dart';
+import 'package:soulscripter/providers/quotes_provider.dart';
 import 'package:soulscripter/screens/splash_screen.dart';
 import 'package:soulscripter/theme.dart';
 
@@ -8,16 +9,17 @@ import 'package:soulscripter/theme.dart';
 void main() {
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => QuoteProvider()),
+      ],
       child: const MyApp(),
     ),
   );
 }
 
-
 /// The root widget of the application.
 class MyApp extends StatelessWidget {
-  /// Creates the [MyApp] widget.
   const MyApp({super.key});
 
   @override

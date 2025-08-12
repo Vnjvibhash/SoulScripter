@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:soulscripter/providers/auth_provider.dart';
+import 'package:soulscripter/providers/quotes_provider.dart';
 import 'package:soulscripter/screens/login_screen.dart';
+import 'package:soulscripter/widgets/quote/quote_card.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -11,31 +14,18 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  // Example static user data and posts
-  final String userName = "Viveka Jee";
-
   final String userAvatar =
       "https://res.cloudinary.com/datxdx0wi/image/upload/v1750217121/pjlbiwax6pwd1obiiwpt.jpg";
 
   final String bio = "Poet | Dreamer | Soulless Writer";
-
   final int followers = 1280;
-
   final int following = 347;
-
-  final int posts = 24;
-
-  // Example post images or quote cards (you can use QuoteCard widgets here for real quotes)
-  final List<String> postImages = [
-    "assets/images/intro1.png",
-    "assets/images/intro2.png",
-    "assets/images/intro3.png",
-  ];
+  final String userId = 'user_002'; // Current user's ID
 
   void _logout() async {
     await Provider.of<AuthProvider>(context, listen: false).logout();
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('You have Logged Sucessfully')),
+      const SnackBar(content: Text('You have logged out successfully')),
     );
     if (!mounted) return;
     Navigator.pushReplacement(
@@ -48,18 +38,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    // Get username from provider
+    final authProvider = Provider.of<AuthProvider>(context);
+    final userName = authProvider.name ?? 'Guest';
+
+    // Fetch user's own quotes from QuoteProvider
+    final quoteProvider = Provider.of<QuoteProvider>(context);
+    final myQuotes = quoteProvider.allQuotes
+        .where((quote) => quote['authorId'] == userId)
+        .toList();
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: const Text("Profile"),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              _logout();
-            },
-          ),
+          IconButton(icon: const Icon(Icons.logout), onPressed: _logout),
         ],
       ),
       body: Column(
@@ -76,7 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 BoxShadow(
                   color: Colors.black12,
                   blurRadius: 12,
-                  offset: Offset(0, 6),
+                  offset: const Offset(0, 6),
                 ),
               ],
             ),
@@ -102,17 +97,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
-
-                // Followers, Posts, Following row
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     _StatBox(title: "Followers", count: followers),
-                    _StatBox(title: "Posts", count: posts),
+                    _StatBox(title: "Posts", count: myQuotes.length),
                     _StatBox(title: "Following", count: following),
                   ],
                 ),
-                const SizedBox(height: 12),
               ],
             ),
           ),
@@ -131,53 +123,59 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
 
-          // Gallery Grid of Posts
+          // Grid of QuoteCards
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GridView.builder(
-                itemCount: postImages.length,
+                itemCount: myQuotes.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
+                  crossAxisCount:
+                      2, // 2 columns for better QuoteCard visibility
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
-                  childAspectRatio: 0.85, // a bit taller to fit counts
+                  childAspectRatio: 0.8,
                 ),
                 itemBuilder: (context, index) {
-                  // Example counts (replace with your real post data)
-                  int likes = 120 + index;
-                  int comments = 15 + index;
-
+                  final quote = myQuotes[index];
+                  final likeCount = (quote['likes'] is List)
+                      ? quote['likes'].length
+                      : 0;
+                  final commentCount = quote['commentCount'] ?? 0;
                   return Material(
-                    elevation: 5,
-                    borderRadius: BorderRadius.circular(16),
+                    elevation: 4,
+                    borderRadius: BorderRadius.circular(18),
                     color: Colors.white,
-                    shadowColor: Colors.black26,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        // Post Image
+                        // QuoteCard occupies the main portion
                         Expanded(
                           child: ClipRRect(
                             borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(16),
+                              top: Radius.circular(18),
                             ),
-                            child: Image.asset(
-                              postImages[index],
-                              fit: BoxFit.cover,
+                            child: QuoteCard(
+                              quoteData: {
+                                ...quote,
+                                'design': {
+                                  ...quote['design'],
+                                  'fontSize':
+                                      (quote['design']['fontSize'] ?? 16.0) / 2,
+                                },
+                              },
                             ),
                           ),
                         ),
-
-                        // Likes & Comments Row
+                        // Footer with like/comment/share counts
                         Container(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
+                            horizontal: 10,
+                            vertical: 6,
                           ),
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(16),
+                              bottom: Radius.circular(18),
                             ),
                             color: Colors.white,
                           ),
@@ -193,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    '$likes',
+                                    '$likeCount',
                                     style: const TextStyle(fontSize: 12),
                                   ),
                                 ],
@@ -207,9 +205,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    '$comments',
+                                    '$commentCount',
                                     style: const TextStyle(fontSize: 12),
                                   ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      final textToShare =
+                                          quote['text'] ??
+                                          'Check out this quote!';
+                                      SharePlus.instance.share(
+                                        ShareParams(text: textToShare),
+                                      );
+                                    },
+                                    child: const Icon(
+                                      Icons.share,
+                                      size: 16,
+                                      color: Colors.teal,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
                                 ],
                               ),
                             ],
@@ -228,7 +246,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-// Helper widget for follower/post/following stats
 class _StatBox extends StatelessWidget {
   final String title;
   final int count;

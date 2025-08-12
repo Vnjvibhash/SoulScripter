@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:soulscripter/providers/quotes_provider.dart';
 import 'package:soulscripter/screens/main_screen.dart';
-import 'package:soulscripter/utils/quote_storage.dart';
 import 'package:soulscripter/widgets/gradient_button.dart';
 import 'package:soulscripter/widgets/quote/quote_card.dart';
 
@@ -37,15 +38,28 @@ class CaptionScreen extends StatefulWidget {
 }
 
 class _CaptionScreenState extends State<CaptionScreen> {
+  File? _backgroundImage;
   String _caption = '';
   String _hashtags = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() {
+    setState(() {
+      _backgroundImage = widget.backgroundImage;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     // Build a quoteMap to pass to QuoteCard
     Map<String, dynamic> quoteMap = {
       'text': widget.quote,
-      'authorName': 'You', // or your app user name if available
+      'authorName': 'You',
       'commentCount': 0,
       'likes': [],
       'design': {
@@ -56,7 +70,7 @@ class _CaptionScreenState extends State<CaptionScreen> {
             ? 'center'
             : (widget.textAlign == TextAlign.right ? 'right' : 'left'),
         'backgroundColor': widget.bgColor.value,
-        'backgroundImage': widget.backgroundImage,
+        'backgroundImage': _backgroundImage,
         'textColor': widget.textColor.value,
         'xFraction': widget.xFraction,
         'yFraction': widget.yFraction,
@@ -114,7 +128,7 @@ class _CaptionScreenState extends State<CaptionScreen> {
                               ? 'right'
                               : 'left'),
                     'backgroundColor': widget.bgColor.value,
-                    'backgroundImage': widget.backgroundImage?.path,
+                    'backgroundImage': _backgroundImage!.path,
                     'textColor': widget.textColor.value,
                     'xFraction': widget.xFraction,
                     'yFraction': widget.yFraction,
@@ -126,7 +140,10 @@ class _CaptionScreenState extends State<CaptionScreen> {
                   'caption': _caption,
                 };
 
-                await QuoteStorage.saveQuote(newQuote);
+                await Provider.of<QuoteProvider>(
+                  context,
+                  listen: false,
+                ).addQuote(newQuote);
 
                 // Show success message
                 ScaffoldMessenger.of(context).showSnackBar(

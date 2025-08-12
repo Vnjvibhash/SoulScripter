@@ -92,12 +92,11 @@ class QuoteFooter extends StatelessWidget {
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
           ),
-          const SizedBox(width: 2),
           Text(
             _formatCount(likeCount),
             style: TextStyle(fontSize: 13, color: theme.colorScheme.onSurface),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.comment, color: Colors.blue, size: 20),
             onPressed: onComment,
@@ -105,16 +104,25 @@ class QuoteFooter extends StatelessWidget {
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
           ),
-          const SizedBox(width: 2),
           Text(
             _formatCount(commentCount),
             style: TextStyle(fontSize: 13, color: theme.colorScheme.onSurface),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.share, color: Colors.teal, size: 20),
             onPressed: onShare,
             tooltip: "Share",
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
+          ),
+          const SizedBox(width: 8),
+          IconButton(
+            icon: const Icon(Icons.download, color: Colors.teal, size: 20),
+            onPressed: () {
+              // TODO: Implement download functionality here
+            },
+            tooltip: "Download",
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
           ),

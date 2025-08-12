@@ -1,6 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:io';
 
 class QuoteCard extends StatelessWidget {
   final Map<String, dynamic> quoteData;
@@ -11,13 +11,13 @@ class QuoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final design = quoteData['design'];
 
-    // Parse color values safely, converting int to Color
     Color bgColor = design['backgroundColor'] != null
         ? Color(design['backgroundColor'])
         : Colors.white;
     Color textColor = design['textColor'] != null
         ? Color(design['textColor'])
         : Colors.black;
+
 
     FontWeight fontWeight;
     switch (design['fontWeight']) {
@@ -31,7 +31,6 @@ class QuoteCard extends StatelessWidget {
         fontWeight = FontWeight.normal;
     }
 
-    // Parse text alignment from string
     TextAlign textAlign;
     switch (design['alignment']) {
       case 'center':
@@ -45,12 +44,25 @@ class QuoteCard extends StatelessWidget {
         textAlign = TextAlign.left;
     }
 
-    // Get fixed text position or default
     double xFraction = design['xFraction'] ?? 0.5;
     double yFraction = design['yFraction'] ?? 0.5;
 
-    // Background image, if any, expected to be File or null
-    File? bgImage = design['bgImage'];
+    // Support multiple types for background image
+    final dynamic bgImageData = design['backgroundImage'];
+
+    ImageProvider? backgroundImageProvider;
+
+    if (bgImageData != null) {
+      if (bgImageData is File) {
+        backgroundImageProvider = FileImage(bgImageData);
+      } else if (bgImageData is String) {
+        if (bgImageData.startsWith('http') || bgImageData.startsWith('https')) {
+          backgroundImageProvider = NetworkImage(bgImageData);
+        } else if (bgImageData.isNotEmpty) {
+          backgroundImageProvider = FileImage(File(bgImageData));
+        }
+      }
+    }
 
     return AspectRatio(
       aspectRatio: 1,
@@ -69,10 +81,10 @@ class QuoteCard extends StatelessWidget {
                   height: side,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: bgImage == null ? bgColor : null,
-                      image: bgImage != null
+                      color: backgroundImageProvider == null ? bgColor : null,
+                      image: backgroundImageProvider != null
                           ? DecorationImage(
-                              image: FileImage(bgImage),
+                              image: backgroundImageProvider,
                               fit: BoxFit.cover,
                             )
                           : null,
@@ -93,8 +105,8 @@ class QuoteCard extends StatelessWidget {
                                 ? design['fontSize']
                                 : (design['fontSize'] as num).toDouble(),
                             color: textColor,
-                            backgroundColor: bgImage != null
-                                ? Colors.white54
+                            backgroundColor: backgroundImageProvider != null
+                                ? Colors.transparent
                                 : null,
                             fontWeight: fontWeight,
                           ),

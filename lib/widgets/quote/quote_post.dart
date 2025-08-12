@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:soulscripter/widgets/quote/quote_card.dart';
 import 'package:soulscripter/widgets/quote/quote_footer.dart';
+import 'package:soulscripter/screens/quote_details_screen.dart';
 
 class QuotePost extends StatelessWidget {
   final Map<String, dynamic> quote;
@@ -35,11 +36,23 @@ class QuotePost extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Quote Card Preview (non-editable)
-            AspectRatio(
-              aspectRatio: 1,
-              child: QuoteCard(
-                quoteData: quote,
+            // 🔹 Make QuoteCard tappable
+            GestureDetector(
+              onTap: () {
+                if (quote['id'] != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => QuoteDetailsScreen(quoteId: quote['id']),
+                    ),
+                  );
+                } else {
+                  debugPrint("⚠️ Quote ID missing!");
+                }
+              },
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: QuoteCard(quoteData: quote),
               ),
             ),
 

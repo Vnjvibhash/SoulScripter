@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:soulscripter/providers/auth_provider.dart';
 import 'package:soulscripter/screens/main_screen.dart';
-import 'package:soulscripter/screens/signup_screen.dart';
 import 'package:soulscripter/widgets/gradient_button.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  String _name = '';
   String _email = '';
-  // ignore: unused_field
   String _password = '';
   bool _obscurePassword = true;
 
@@ -26,33 +26,24 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _submit() async {
-    if (_formKey.currentState?.validate() ?? false) {
-      _formKey.currentState?.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
 
       final errorMessage = await Provider.of<AuthProvider>(
         context,
         listen: false,
-      ).login(_email, _password);
-
-      if (!mounted) return;
+      ).signup(_name, _email, _password);
 
       if (errorMessage != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(errorMessage), backgroundColor: Colors.red),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(errorMessage)));
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Logged in as ${_email.split('@')[0]}'),
-          backgroundColor: Colors.green,
-        ),
-      );
-
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MainScreen()),
+        MaterialPageRoute(builder: (_) => const MainScreen()),
       );
     }
   }
@@ -99,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Welcome to SoulScripter',
+                    'Create Your Account',
                     style: GoogleFonts.pacifico(
                       fontSize: 34,
                       color: primaryColor,
@@ -115,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Capture & Share your soul\'s voice',
+                    'Join SoulScripter and share your voice',
                     style: GoogleFonts.openSans(
                       fontSize: 16,
                       color: Colors.grey[700],
@@ -129,6 +120,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     key: _formKey,
                     child: Column(
                       children: [
+                        // Name Field
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Full Name',
+                            prefixIcon: const Icon(Icons.person),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your name';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) => _name = value!.trim(),
+                        ),
+                        const SizedBox(height: 24),
+
                         // Email Field
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
@@ -174,10 +184,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
+                              return 'Please enter a password';
                             }
                             if (value.length < 6) {
-                              return 'Password must be at least 6 characters';
+                              return 'Password must be at least 6 characters long';
                             }
                             return null;
                           },
@@ -185,9 +195,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 38),
 
-                        // Gradient Login Button
+                        // Gradient Sign Up Button
                         GradientButton(
-                          text: 'Log In',
+                          text: 'Sign Up',
                           onPressed: _submit,
                           gradientColors: [
                             primaryColor,
@@ -211,52 +221,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         const SizedBox(height: 16),
 
-                        // Sign Up prompt
+                        // Already have an account prompt
                         TextButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const SignUpScreen(),
-                              ),
-                            );
+                            Navigator.pop(context);
                           },
                           child: Text(
-                            "Don't have an account? Sign Up",
+                            "Already have an account? Log In",
                             style: GoogleFonts.openSans(
                               fontSize: 14,
                               color: primaryColor,
                               decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-
-                        // ✅ Guest Login Button
-                        TextButton(
-                          onPressed: () async {
-                            await Provider.of<AuthProvider>(
-                              context,
-                              listen: false,
-                            ).guestLogin();
-                            if (!mounted) return;
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const MainScreen(),
-                              ),
-                            );
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Logged in as Guest"),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            "Continue as Guest",
-                            style: GoogleFonts.openSans(
-                              fontSize: 14,
-                              color: Colors.grey[700],
-                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),

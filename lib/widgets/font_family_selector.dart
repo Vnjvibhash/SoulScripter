@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:soulscripter/widgets/gradient_button.dart';
 
 class FontFamilySelector extends StatelessWidget {
   final List<String> fonts;
@@ -14,6 +15,7 @@ class FontFamilySelector extends StatelessWidget {
   });
 
   void _openFontFamilyDialog(BuildContext context) {
+    final theme = Theme.of(context);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -62,9 +64,13 @@ class FontFamilySelector extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: ElevatedButton(
+                  child: GradientButton(
+                    text: 'Done',
                     onPressed: () => Navigator.of(ctx).pop(),
-                    child: const Text('Done'),
+                    gradientColors: [
+                      theme.colorScheme.primary,
+                      theme.colorScheme.secondary,
+                    ],
                   ),
                 ),
               ],

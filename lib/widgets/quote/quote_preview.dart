@@ -15,7 +15,7 @@ class QuotePreview extends StatefulWidget {
   final double initialXFraction;
   final double initialYFraction;
   final bool isEditable;
-  final Function(double, double)? onPositionChanged; // only if editable
+  final Function(double, double)? onPositionChanged;
 
   const QuotePreview({
     super.key,
