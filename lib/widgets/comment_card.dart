@@ -10,6 +10,11 @@ class CommentCard extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: Colors.grey[300],
+        backgroundImage:
+            (comment['userAvatar'] != null &&
+                comment['userAvatar'].toString().isNotEmpty)
+            ? NetworkImage(comment['userAvatar'])
+            : null,
         child:
             (comment['userAvatar'] == null ||
                 comment['userAvatar'].toString().isEmpty)
@@ -20,11 +25,6 @@ class CommentCard extends StatelessWidget {
                   color: Colors.black,
                 ),
               )
-            : null,
-        backgroundImage:
-            (comment['userAvatar'] != null &&
-                comment['userAvatar'].toString().isNotEmpty)
-            ? NetworkImage(comment['userAvatar'])
             : null,
       ),
       title: Text(comment['userName']),
