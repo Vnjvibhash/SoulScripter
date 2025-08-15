@@ -19,9 +19,7 @@ class _QuoteComposerState extends State<QuoteComposer> {
 
   String _quote = '';
 
-  /// 50 fonts including some Hindi compatible fonts
   final _fonts = [
-    // English Popular Fonts
     'Roboto',
     'Lobster',
     'Pacifico',
@@ -51,8 +49,6 @@ class _QuoteComposerState extends State<QuoteComposer> {
     'Satisfy',
     'Teko',
     'Prompt',
-
-    // Hindi / Devanagari fonts from Google Fonts
     'Teko',
     'Harmattan',
     'Karma',
