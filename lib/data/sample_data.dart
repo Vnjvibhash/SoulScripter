@@ -597,5 +597,21 @@ class SampleData {
       'text': 'Courage to continue - that\'s the key! 🔑',
       'createdAt': 'TIMESTAMP',
     },
+    {
+      'quoteId': 'quote_003',
+      'userId': 'user_003',
+      'userName': 'Jordan Blake',
+      'userAvatar': null,
+      'text': 'Love this perspective on passion and work! 💫',
+      'createdAt': 'TIMESTAMP',
+    },
+    {
+      'quoteId': 'quote_003',
+      'userId': 'user_001',
+      'userName': 'Maya Chen',
+      'userAvatar': null,
+      'text': 'Beautiful poetry! Your words always touch my soul.',
+      'createdAt': 'TIMESTAMP',
+    },
   ];
 }
