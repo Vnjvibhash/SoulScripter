@@ -64,28 +64,46 @@ flutter run
 
 ## 🗂️ Project Structure
 ```bash
-lib/
-  main.dart
-  theme.dart
-  screens/
-    quote_composer.dart
-    preview_screen.dart
-    caption_screen.dart
-  widgets/
-    font_family_selector.dart
-    font_size_selector.dart
-    text_align_buttons.dart
-    bg_color_picker_button.dart
-    bg_image_picker_button.dart
-    text_color_picker_button.dart
-    quote_input_field.dart
-    draggable_quote_preview.dart
-    color_picker_dialog.dart
-    text_color_picker_dialog.dart
+└── lib
+    ├── data
+        ├── intro_content.dart
+        └── sample_data.dart
+    ├── main.dart
+    ├── models
+        └── intro_model.dart
+    ├── providers
+        ├── auth_provider.dart
+        └── quotes_provider.dart
+    ├── screens
+        ├── caption_screen.dart
+        ├── home_screen.dart
+        ├── intro_screen.dart
+        ├── login_screen.dart
+        ├── main_screen.dart
+        ├── preview_screen.dart
+        ├── profile_screen.dart
+        ├── quote_composer.dart
+        ├── quote_details_screen.dart
+        ├── signup_screen.dart
+        └── splash_screen.dart
+    ├── theme.dart
+    └── widgets
+        ├── bg_color_picker.dart
+        ├── bg_image_picker.dart
+        ├── color_picker_dialog.dart
+        ├── comment_card.dart
+        ├── font_family_selector.dart
+        ├── font_size_selector.dart
+        ├── gradient_button.dart
+        ├── intro_clipper.dart
+        ├── quote
+            ├── quote_card.dart
+            ├── quote_footer.dart
+            ├── quote_post.dart
+            └── quote_preview.dart
+        ├── shimmer_bg.dart
+        └── text_aligner.dart
 ```
-- **screens/:** Main app flow screens (compose, preview, caption/hashtags, etc.)
-- **widgets/:** All UI building blocks, color pickers, and input controls.
-- **theme.dart:** Brand color palette for light and dark themes.
 
 ## 🚀 Roadmap / TODO
 -  Community features: Like, share, and comment using Firebase
